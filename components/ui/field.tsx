@@ -26,7 +26,7 @@ export function Field({ id, label, hint, error, required, children }: FieldProps
 
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-sm font-medium text-[var(--color-foreground)]">
+      <label htmlFor={id} className="text-sm font-bold text-[var(--color-foreground)]">
         {label}
         {required && (
           <span aria-hidden="true" className="ml-0.5 text-[var(--color-brand-error)]">

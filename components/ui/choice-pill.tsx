@@ -67,7 +67,7 @@ export function ChoicePills(props: ChoicePillsProps) {
 
   return (
     <fieldset aria-describedby={describedBy || undefined} aria-invalid={!!error}>
-      <legend className="mb-2 block text-sm font-medium text-[var(--color-foreground)]">
+      <legend className="mb-2 block text-sm font-bold text-[var(--color-foreground)]">
         {legend}
         {required && (
           <span aria-hidden="true" className="ml-0.5 text-[var(--color-brand-error)]">
