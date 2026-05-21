@@ -25,7 +25,13 @@ export function CopyPrompt() {
         <p className="text-xs font-medium text-[var(--color-brand-muted)]">
           Optional: copy this prompt → paste in ChatGPT or Claude → paste the JSON back below.
         </p>
-        <Button type="button" variant="secondary" size="md" onClick={handleCopy}>
+        <Button
+          type="button"
+          variant="secondary"
+          size="md"
+          onClick={handleCopy}
+          className="bg-[#00f0ff] text-black hover:bg-[#00d6e3] shadow-[0_0_12px_rgba(0,240,255,0.6)]"
+        >
           {copied ? "Copied!" : "Copy prompt"}
         </Button>
       </div>
