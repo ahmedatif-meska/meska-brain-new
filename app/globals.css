@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0b1220;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Meska brand tokens */
+  --color-brand-primary: #1e66ff;
+  --color-brand-primary-hover: #1856d6;
+  --color-brand-on-primary: #ffffff;
+  --color-brand-field-bg: #eef3f8;
+  --color-brand-field-bg-hover: #dde7f2;
+  --color-brand-field-border: #d6dee8;
+  --color-brand-muted: #5a6b85;
+  --color-brand-error: #c0162a;
+  --color-brand-error-bg: #fdecee;
+
+  --font-sans:
+    "Calibri", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial,
+    sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo,
+    monospace;
+
+  --radius-brand: 12px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Visually hidden but focusable — used for the honeypot input. */
+.sr-only-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

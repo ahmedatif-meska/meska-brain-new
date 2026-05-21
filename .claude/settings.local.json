@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(npx vitest *)",
+      "Bash(grep -iE '\\\\.env\\(\\\\.|$\\)|secret|service.role|credential')",
+      "Bash(grep -v '\\\\.example$')",
+      "Bash(git add *)",
+      "Bash(git -c user.email=ahmedatif@meska.ai -c 'user.name=Ahmed Atif' commit -m ' *)"
+    ]
+  }
+}
