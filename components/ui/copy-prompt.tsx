@@ -30,9 +30,24 @@ export function CopyPrompt() {
           variant="secondary"
           size="md"
           onClick={handleCopy}
-          className="bg-[#00f0ff] text-black hover:bg-[#00d6e3] shadow-[0_0_12px_rgba(0,240,255,0.6)]"
+          className="bg-gradient-to-br from-[#7ee8ff] via-[#3aa8ff] to-[#0066ff] text-white font-semibold shadow-[0_4px_18px_rgba(30,144,255,0.55)] hover:brightness-110"
         >
-          {copied ? "Copied!" : "Copy prompt"}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+          </svg>
+          {copied ? "Copied!" : "Copy Prompt"}
         </Button>
       </div>
       <textarea
