@@ -1,0 +1,1 @@
+alter table community_submissions drop constraint linkedin_url_shape;

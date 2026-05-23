@@ -1,7 +1,6 @@
 import "server-only";
 import { NextResponse, type NextRequest } from "next/server";
 import { getServerSupabase } from "@/lib/supabase/server";
-import { checkRateLimit } from "@/lib/rate-limit";
 import {
   parseAiProfile,
   submissionSchema,
@@ -12,12 +11,6 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const SUPABASE_TIMEOUT_MS = 5000;
-
-function getIp(req: NextRequest): string {
-  const fwd = req.headers.get("x-forwarded-for");
-  if (fwd) return fwd.split(",")[0]!.trim();
-  return req.headers.get("x-real-ip") ?? "unknown";
-}
 
 async function withTimeout<T>(p: PromiseLike<T>): Promise<T> {
   return await new Promise<T>((resolve, reject) => {
@@ -62,16 +55,6 @@ export async function POST(req: NextRequest) {
   // Honeypot — pretend success.
   if (data.company_website && data.company_website.length > 0) {
     return NextResponse.json({ status: "dropped" }, { status: 200 });
-  }
-
-  // Rate limit (interim per research R7).
-  const ip = getIp(req);
-  const rl = checkRateLimit(ip);
-  if (!rl.allowed) {
-    return NextResponse.json(
-      { status: "rate_limited", retryAfterSeconds: rl.retryAfterSeconds },
-      { status: 429 },
-    );
   }
 
   const aiProfile = parseAiProfile(data.aiProfile);
@@ -175,8 +158,10 @@ export async function POST(req: NextRequest) {
       { status: 201 },
     );
   } catch (err) {
+    const errObj = err as Record<string, unknown>;
     const message =
-      err instanceof Error ? err.message : "unknown_supabase_error";
+      err instanceof Error ? err.message : JSON.stringify(err);
+    console.error("Supabase error detail:", JSON.stringify(errObj, null, 2));
     log(requestId, "upstream_unavailable", start, { message });
     return NextResponse.json(
       { status: "upstream_unavailable" },

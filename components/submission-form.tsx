@@ -26,7 +26,6 @@ import { DuplicateDialog } from "@/components/duplicate-dialog";
 type BannerState =
   | { kind: "none" }
   | { kind: "retry"; message: string }
-  | { kind: "rate"; retryAfterSeconds: number };
 
 export function SubmissionForm() {
   const router = useRouter();
@@ -93,10 +92,6 @@ export function SubmissionForm() {
       }
       if (result.status === "invalid" && Array.isArray(result.issues)) {
         applyServerIssues(result.issues);
-        return;
-      }
-      if (result.status === "rate_limited") {
-        setBanner({ kind: "rate", retryAfterSeconds: result.retryAfterSeconds ?? 60 });
         return;
       }
       // Anything else => treat as upstream failure
@@ -384,11 +379,6 @@ export function SubmissionForm() {
         {banner.kind === "retry" && (
           <div role="alert" className="rounded-[var(--radius-brand)] border border-[var(--color-brand-error)] bg-[var(--color-brand-error-bg)] p-3 text-sm text-[var(--color-brand-error)]">
             {banner.message}
-          </div>
-        )}
-        {banner.kind === "rate" && (
-          <div role="alert" className="rounded-[var(--radius-brand)] border border-[var(--color-brand-error)] bg-[var(--color-brand-error-bg)] p-3 text-sm text-[var(--color-brand-error)]">
-            You&apos;ve submitted a few times in a row. Please wait about {banner.retryAfterSeconds}s and try again.
           </div>
         )}
 
