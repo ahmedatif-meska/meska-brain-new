@@ -74,17 +74,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // AI profile JSON: parse + validate. Treat parse failure as a field error.
   const aiProfile = parseAiProfile(data.aiProfile);
-  if (!aiProfile.ok) {
-    return NextResponse.json(
-      {
-        status: "invalid",
-        issues: [{ path: ["aiProfile"], message: aiProfile.message }],
-      },
-      { status: 400 },
-    );
-  }
 
   const emailNormalized = data.email.trim().toLowerCase();
   const requestId = crypto.randomUUID();

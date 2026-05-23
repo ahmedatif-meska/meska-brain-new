@@ -218,23 +218,20 @@ export const submissionSchema = z.object({
 export type SubmissionInput = z.input<typeof submissionSchema>;
 export type SubmissionOutput = z.output<typeof submissionSchema>;
 
-// Server-side: parse the aiProfile string (if any) and re-validate JSON shape.
-export function parseAiProfile(raw: string | undefined | null):
-  | { ok: true; value: Record<string, unknown> | null }
-  | { ok: false; message: string } {
+// Server-side: pass the aiProfile string through as-is (no JSON validation).
+export function parseAiProfile(raw: string | undefined | null): {
+  ok: true;
+  value: Record<string, unknown> | null;
+} {
   if (!raw || raw.trim().length === 0) return { ok: true, value: null };
   let json: unknown;
   try {
     json = JSON.parse(raw);
   } catch {
-    return { ok: false, message: "AI profile must be valid JSON." };
+    return { ok: true, value: { _raw: raw } };
   }
   if (typeof json !== "object" || json === null || Array.isArray(json)) {
-    return { ok: false, message: "AI profile must be a JSON object." };
+    return { ok: true, value: { _raw: raw } };
   }
-  const result = aiProfileSchema.safeParse(json);
-  if (!result.success) {
-    return { ok: false, message: "AI profile JSON shape is invalid." };
-  }
-  return { ok: true, value: result.data as Record<string, unknown> };
+  return { ok: true, value: json as Record<string, unknown> };
 }
