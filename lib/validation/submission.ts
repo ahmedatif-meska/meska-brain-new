@@ -142,11 +142,7 @@ const jobTitleSchema = z
 const linkedinUrlSchema = z
   .string()
   .trim()
-  .max(300, "URL is too long.")
-  .regex(
-    /^https:\/\/(www\.)?linkedin\.com\/(in|pub)\/[^\s/]+\/?$/i,
-    "Enter a LinkedIn profile URL like https://www.linkedin.com/in/your-handle",
-  );
+  .max(300, "URL is too long.");
 
 // -----------------------------------------------------------------------------
 // AI profile JSON schema
